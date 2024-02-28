@@ -6,23 +6,29 @@ import { Note } from "./Note"
 import { ChevronLeftIcon, NotebookPenIcon } from "lucide-react"
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./ui/sheet"
 import { Note as NoteType} from "../types"
+import { getSearchNot } from "../lib/utils"
 
 
 export function HomeClient() {
 
-
+  
+  
   const notess = [
     { id: '1', note: 'Hello, World!', date: new Date(2023-12-12) },
     { id: '2', note: ' World!',date: new Date() },
   ]
-
-  const [seachNote, setSeachNote] = useState('')
+  
+  const [search, setSearch] = useState('')
   const [note, setNote] = useState('')
   const [notes, setNotes] = useState<NoteType[]>(notess)
 
+  const searchNote = getSearchNot(notes, search)
+  console.log(searchNote);
+  
+
 
   function handleSeachNote(e: ChangeEvent<HTMLInputElement>) {
-    setSeachNote(e.target.value)
+    setSearch(e.target.value)
   }
 
   function handleUpdateNote(data : NoteType) { 
@@ -48,11 +54,11 @@ export function HomeClient() {
     <section className="w-full min-h-[94vh] relative">
       <SeachBar
         onSeachNote={handleSeachNote}
-        seachNote={seachNote}
+        seachNote={search}
       />
 
       <div className="w-full flex flex-col gap-1 mt-10">
-        {notes.map((item) => (
+        {searchNote.map((item) => (
           <Note key={item.id} note={item} onUpdate={handleUpdateNote} />
         ))}
       </div>
