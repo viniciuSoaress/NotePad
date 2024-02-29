@@ -1,54 +1,20 @@
 'use client'
 
-import { ChangeEvent, useState } from "react"
 import { SeachBar } from "./Seachbar"
 import { Note } from "./Note"
 import { ChevronLeftIcon, NotebookPenIcon } from "lucide-react"
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTrigger } from "./ui/sheet"
-import { Note as NoteType} from "../types"
 import { getSearchNot } from "../lib/utils"
+import { useNote } from "../hooks/useNote"
 
 
 export function HomeClient() {
 
+  const {handleNewNote, handleSeachNote, handleUpdateNote, notes, search, setNote} = useNote()
   
-  
-  const notess = [
-    { id: '1', note: 'Hello, World!', date: new Date(2023-12-12) },
-    { id: '2', note: ' World!',date: new Date() },
-  ]
-  
-  const [search, setSearch] = useState('')
-  const [note, setNote] = useState('')
-  const [notes, setNotes] = useState<NoteType[]>(notess)
 
   const searchNote = getSearchNot(notes, search)
-  console.log(searchNote);
-  
 
-
-  function handleSeachNote(e: ChangeEvent<HTMLInputElement>) {
-    setSearch(e.target.value)
-  }
-
-  function handleUpdateNote(data : NoteType) { 
-    setNotes(notes.map(n => {
-      if (n.id === data.id){
-        return data
-      }else{
-        return n
-      }
-    }))
-  }
-
-  function handleNewNote() {
-
-    note !== '' ? setNotes((prev) => ([
-      ...prev,
-      { id: crypto.randomUUID(), note: note, date: new Date() }
-    ])) : null
-    setNote('')
-  }
 
   return (
     <section className="w-full min-h-[94vh] relative">
