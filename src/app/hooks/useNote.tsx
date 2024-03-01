@@ -16,6 +16,10 @@ export function useNote(){
   }
 
   function handleUpdateNote(data : NoteType) { 
+
+    if(data.note === ''){
+      return setNotes(notes.filter(n => n.id !== data.id))
+    }
     setNotes(notes.map(n => {
       if (n.id === data.id){
         return data
